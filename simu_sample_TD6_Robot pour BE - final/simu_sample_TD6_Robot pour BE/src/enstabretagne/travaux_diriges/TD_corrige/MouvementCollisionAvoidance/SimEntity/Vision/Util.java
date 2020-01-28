@@ -295,8 +295,11 @@ public class Util {
 	 
 	 Point3D a1 = new Point3D(Math.sin(direction),Math.cos(direction),0);
 	 Point3D a2 = new Point3D(Math.sin(direction + (Math.PI /2)),Math.cos(direction + (Math.PI /2)),0);
-	 Point3D a3 =  new Point3D(Math.sin(direction+ Math.PI),Math.cos(direction+ Math.PI),0);
+	 Point3D a3 = new Point3D(Math.sin(direction+ Math.PI),Math.cos(direction+ Math.PI),0);
 	 
+	 Lpledge.add(a3);
+	 Lpledge.add(a2);
+	 Lpledge.add(a1);
 	 
 	 return Lpledge;
 	 

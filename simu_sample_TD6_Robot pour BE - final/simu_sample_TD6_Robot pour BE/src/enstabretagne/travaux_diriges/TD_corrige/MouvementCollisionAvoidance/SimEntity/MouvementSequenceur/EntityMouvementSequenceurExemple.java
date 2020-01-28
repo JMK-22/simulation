@@ -1,6 +1,7 @@
 package enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.MouvementSequenceur;
 
 import enstabretagne.base.logger.Logger;
+import enstabretagne.base.time.LogicalDuration;
 import enstabretagne.simulation.components.IEntity;
 import enstabretagne.simulation.components.data.SimFeatures;
 import enstabretagne.simulation.core.implementation.SimEvent;
@@ -30,9 +31,15 @@ public class EntityMouvementSequenceurExemple extends EntityMouvementSequenceur{
 	public class StartMvt extends SimEvent {
 		@Override
 		public void Process() {
-			selfRotator.init(getCurrentLogicalDate(), mv.getPosition(getCurrentLogicalDate()),
-					mv.getRotationXYZ(getCurrentLogicalDate()), emsi.getTarget(), emsf.getMaxSelfRotationSpeed());
+			selfRotator.init(
+				getCurrentLogicalDate(),
+				mv.getPosition(getCurrentLogicalDate()),
+				mv.getRotationXYZ(getCurrentLogicalDate()),
+				getTarget(),
+				emsf.getMaxSelfRotationSpeed());
+			
 			mv = selfRotator;
+			
 			Post(new SelfRotationFinished(), mv.getDurationToReach());			
 		}
 	}
@@ -43,7 +50,7 @@ public class EntityMouvementSequenceurExemple extends EntityMouvementSequenceur{
 		public void Process() {
 			if (emsf.getMaxLinearSpeed() != 0) {
 				rectilinearMover.init(getCurrentLogicalDate(), mv.getPosition(getCurrentLogicalDate()),
-						emsi.getTarget(), emsf.getMaxLinearSpeed());
+						getTarget(), emsf.getMaxLinearSpeed());
 				mv = rectilinearMover;
 				Post(new RectilinearMouvementFinished(), mv.getDurationToReach());
 			}
@@ -54,7 +61,7 @@ public class EntityMouvementSequenceurExemple extends EntityMouvementSequenceur{
 
 		@Override
 		public void Process() {	
-			Logger.Detail(this, "RectilinearMouvementFinished", "Finished : " + emsi.getTarget());
+			Logger.Detail(this, "RectilinearMouvementFinished", "Finished : " + getTarget());
 			staticMover.init(mv.getPosition(getCurrentLogicalDate()), mv.getRotationXYZ(getCurrentLogicalDate()));
 			mv = staticMover;
 			
@@ -64,7 +71,7 @@ public class EntityMouvementSequenceurExemple extends EntityMouvementSequenceur{
 //			Logger.Information(r, "AfterActivate", "Can see table ? " + r.canSeeTable());
 //			Logger.Information(r, "AfterActivate", "Vision ? " + r.AcessibleZone().size());
 			
-//			Post(r.new MouvementFinished(), getCurrentLogicalDate());
+			Post(r.new MouvementFinished(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));
 		}
 	}
 }

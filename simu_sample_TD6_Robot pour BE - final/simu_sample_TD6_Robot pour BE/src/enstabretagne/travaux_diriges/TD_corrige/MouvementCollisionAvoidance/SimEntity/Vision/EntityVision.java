@@ -189,42 +189,64 @@ public class EntityVision extends SimEntity{
 			if (surrondings.containsKey("devant")) {
 				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "devant");
 				return surrondings.get("devant");
+				
 			} else if (surrondings.containsKey("droite")) {
 				pleadCounter -= 1;
 				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "droite");
+				r.addOrientation(-Math.PI / 2);
 				return surrondings.get("droite");
+				
+			} else if (surrondings.containsKey("gauche")) {
+				pleadCounter += 1;
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "gauche");
+				r.addOrientation(Math.PI / 2);
+				return surrondings.get("gauche");
+				
 			} else {
-				pleadCounter += 1;
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "gauche");
-				return surrondings.get("gauche");
-			}	
+				Logger.Information(r, "DECISION_MOUVEMENT", "surrondings contains no point, no mvt possible");
+			}
 		} else if (pleadCounter > 0) {
-			if (surrondings.containsKey("gauche")) {
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "gauche");
-				pleadCounter += 1;
-				return surrondings.get("gauche");
+			if (surrondings.containsKey("droite")) {
+				pleadCounter -= 1;
+				r.addOrientation(-Math.PI / 2);
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "droite");
+				return surrondings.get("droite");
+				
 			} else if (surrondings.containsKey("devant")) {
 				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "devant");
 				return surrondings.get("devant");
+				
+			} else if (surrondings.containsKey("gauche")) {
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "gauche");
+				pleadCounter += 1;
+				r.addOrientation(Math.PI / 2);
+				return surrondings.get("gauche");
 			} else {
-				pleadCounter -= 1;
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "droite");
-				return surrondings.get("droite");
+				Logger.Information(r, "pledge", "surrondings contains no point, no mvt possible");
 			}
 		} else {
-			if (surrondings.containsKey("droite")) {
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "droite");
-				pleadCounter -= 1;
-				return surrondings.get("droite");
+			if (surrondings.containsKey("gauche")) {
+				pleadCounter += 1;
+				r.addOrientation(Math.PI / 2);
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "gauche");
+				return surrondings.get("gauche");
+
 			} else if (surrondings.containsKey("devant")) {
 				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "devant");
 				return surrondings.get("devant");
+				
+			} else if (surrondings.containsKey("droite")) {
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "droite");
+				pleadCounter -= 1;
+				r.addOrientation(-Math.PI / 2);
+				return surrondings.get("droite");
+				
 			} else {
-				pleadCounter += 1;
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "gauche");
-				return surrondings.get("gauche");
+				Logger.Information(r, "pledge", "surrondings contains no point, no mvt possible");
 			}
 		}
+		
+		return null;
 	}
 	// Fin Fonctions grille
 	
@@ -233,15 +255,18 @@ public class EntityVision extends SimEntity{
 		
 		HashMap<String, Point3D> dicPledge = new HashMap<String, Point3D>();
 		
-		List<String> list = Arrays.asList("Gauche", "Milieu", "Droite"); 
+		List<String> list = Arrays.asList("gauche", "devant", "droite"); 
 		
-		Point3D dir = ((Robot) getParent()).getDirection();
-		double rad = Math.toRadians(dir.getZ()); 
+//		Point3D dir = ((Robot) getParent()).getDirection();
+		
+//		double rad = Math.toRadians(dir.getZ());
+		
+		double rad = ((Robot) getParent()).getOrientation();
 		
 		List<Point3D> pledge_points = Util.Pledge_point(rad);
 		
 		List<Wall> walls = (List<Wall>) (List<?>) getEngine()
-				.requestSimObject(simo -> (simo instanceof Wall) && ((Wall) simo).getType() == 2 || ((Wall) simo).getType()==3);
+				.requestSimObject(simo -> (simo instanceof Wall) && (((Wall) simo).getType() == 2 || ((Wall) simo).getType()==3));
 		
 		List<Bounds> bounds = new ArrayList<Bounds>();
 		
@@ -254,9 +279,16 @@ public class EntityVision extends SimEntity{
 		
 		for (int i=0; i<3;i++){
 			
-			if (BorderAndPathGenerator.intervisibilityBetween(pledge_points.get(i), Util.rectifi(positionR()),bounds)){
+			Point3D p = pledge_points.get(i).add(Util.rectifi(positionR()));
+			
+			
+			
+			if (BorderAndPathGenerator.intervisibilityBetween(p, Util.rectifi(positionR()),bounds)){
 				
-				dicPledge.put(list.get(i),pledge_points.get(i));
+				System.out.println(list.get(i));
+				System.out.println(p.toString());
+				
+				dicPledge.put(list.get(i),p);
 				
 			}
 			

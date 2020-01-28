@@ -11,6 +11,7 @@ public class RobotInit extends SimInitParameters{
 	private String name;
 	private Color couleur;
 	private boolean isBad;
+	private double orientation;
 	
 	private EntityMouvementSequenceurInit mvtSeqIni;
 	private EntityVisionInit VisionIni;
@@ -46,6 +47,8 @@ public class RobotInit extends SimInitParameters{
 		this.name = name;
 		this.couleur = couleur;
 		
+		orientation = Math.toRadians(orientationXYZInit.getZ());
+		
 		MovableState mst = new MovableState(
 				posInit, 
 				Point3D.ZERO, 
@@ -58,6 +61,10 @@ public class RobotInit extends SimInitParameters{
 				mst,target);
 		this.VisionIni = new EntityVisionInit(posInit);
 		this.isBad = isBad;
+	}
+
+	public double getOrientation() {
+		return orientation;
 	}
 	
 	

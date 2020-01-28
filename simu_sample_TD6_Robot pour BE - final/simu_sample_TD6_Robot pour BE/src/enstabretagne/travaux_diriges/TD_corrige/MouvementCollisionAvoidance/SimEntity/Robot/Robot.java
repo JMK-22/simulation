@@ -6,6 +6,7 @@ import java.util.List;
 
 
 import enstabretagne.base.logger.Logger;
+import enstabretagne.base.time.LogicalDuration;
 //import enstabretagne.base.time.LogicalDuration;
 import enstabretagne.monitor.interfaces.IMovable;
 import enstabretagne.simulation.components.IEntity;
@@ -43,12 +44,17 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 	private EntityVision rvd;
 
 	private Point3D dir;// direction du mouvement
+	private double orientation = 0.0;
 	Point3D target;
 	double speed;
 	Rotate r;
+	
+	
 
 	public void setTarget(Point3D target) {
 		this.target = target;
+		rmv.setTarget(target);
+//		rIni.getMvtSeqIni().setTarget(target);
 	}
 	
 	@Override
@@ -120,6 +126,7 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 	protected void initializeSimEntity(SimInitParameters init) {
 		rIni = (RobotInit) getInitParameters();
 		maPosition = rIni.getPosInit();
+		orientation = rIni.getOrientation();
 		map = new DijkstraGraph(maPosition);
 
 		//le robot m�chant ne bouge pas
@@ -253,8 +260,6 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 
 		@Override
 		public void Process() {
-			// TODO Auto-generated method stub
-			rIni.getMvtSeqIni().setTarget(target);
 			Post(((EntityMouvementSequenceurExemple) rmv).new StartMvt(), getCurrentLogicalDate());	
 		}
 	}
@@ -263,8 +268,7 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 
 		@Override
 		public void Process() {
-			// TODO Auto-generated method stub
-			
+			Post(((EntityVisionGood) rvd).new MouvementStrategie(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));
 		}
 	}
 	
@@ -292,6 +296,18 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 	@Override
 	public void onParentSet() {
 
+	}
+
+	public double getOrientation() {
+		return orientation;
+	}
+	
+	public void addOrientation(double angle) {
+		setOrientation(getOrientation() + angle);
+	}
+
+	public void setOrientation(double orientation) {
+		this.orientation = orientation;
 	}
 
 }
