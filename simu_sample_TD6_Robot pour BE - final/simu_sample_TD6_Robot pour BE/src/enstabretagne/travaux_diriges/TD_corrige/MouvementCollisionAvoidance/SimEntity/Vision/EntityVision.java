@@ -28,6 +28,7 @@ public class EntityVision extends SimEntity{
 	EntityVisionInit ini;
 	public DijkstraGraph  escapeGraph;
 	 
+	private int pleadCounter = 0;
 	
 	public EntityVision(String name, SimFeatures features) {
 		super(name, features);
@@ -181,7 +182,50 @@ public class EntityVision extends SimEntity{
 	
 	
 	// Debut Fonctions grille
-
+	Point3D pleadDecision(HashMap<String, Point3D> surrondings) {
+		Robot r = (Robot) getParent();
+		
+		if (pleadCounter == 0) {
+			if (surrondings.containsKey("devant")) {
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "devant");
+				return surrondings.get("devant");
+			} else if (surrondings.containsKey("droite")) {
+				pleadCounter -= 1;
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "droite");
+				return surrondings.get("droite");
+			} else {
+				pleadCounter += 1;
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "gauche");
+				return surrondings.get("gauche");
+			}	
+		} else if (pleadCounter > 0) {
+			if (surrondings.containsKey("gauche")) {
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "gauche");
+				pleadCounter += 1;
+				return surrondings.get("gauche");
+			} else if (surrondings.containsKey("devant")) {
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "devant");
+				return surrondings.get("devant");
+			} else {
+				pleadCounter -= 1;
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "droite");
+				return surrondings.get("droite");
+			}
+		} else {
+			if (surrondings.containsKey("droite")) {
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "droite");
+				pleadCounter -= 1;
+				return surrondings.get("droite");
+			} else if (surrondings.containsKey("devant")) {
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "devant");
+				return surrondings.get("devant");
+			} else {
+				pleadCounter += 1;
+				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "gauche");
+				return surrondings.get("gauche");
+			}
+		}
+	}
 	// Fin Fonctions grille
 	
 	@SuppressWarnings("unchecked")
