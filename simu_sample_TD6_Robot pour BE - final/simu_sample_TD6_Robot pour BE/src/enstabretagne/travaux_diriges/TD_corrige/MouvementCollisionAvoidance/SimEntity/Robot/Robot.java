@@ -36,6 +36,10 @@ import de.vogella.algorithms.dijkstra.model.jfxmodel.DijkstraGraph;
 
 public class Robot extends SimEntity implements IMovable, IRobot3D {
 	RobotInit rIni;
+	public RobotInit getrIni() {
+		return rIni;
+	}
+
 	RobotFeatures rFeat;
 	Point3D maPosition;
 	DijkstraGraph map;

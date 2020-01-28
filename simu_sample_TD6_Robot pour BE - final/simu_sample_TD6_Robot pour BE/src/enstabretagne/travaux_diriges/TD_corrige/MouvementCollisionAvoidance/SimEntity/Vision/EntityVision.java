@@ -122,7 +122,7 @@ public class EntityVision extends SimEntity{
 		
 		@SuppressWarnings("unchecked")
 		List<Wall> walls = (List<Wall>) (List<?>) getEngine()
-				.requestSimObject(simo -> (simo instanceof Wall) && ((Wall) simo).getType() == 2|| ((Wall) simo).getType() == 3);
+				.requestSimObject(simo -> ((simo instanceof Wall) && (((Wall) simo).getType() == 2|| ((Wall) simo).getType() == 3)));
 		List<Bounds> bounds = new ArrayList<Bounds>();
 		
 		for (Wall w : walls) {
@@ -156,8 +156,10 @@ public class EntityVision extends SimEntity{
 			bounds.addAll(w.getBounds());
 		}
 
+		
 		Robot bad = null;
-		List<Robot> objets = (List<Robot>) (List<?>) getEngine().requestSimObject(simo -> (simo instanceof Robot) && (simo != this));
+		List<Robot> objets = (List<Robot>) (List<?>) getEngine().requestSimObject(simo -> (simo instanceof Robot) && (simo != getParent()));
+
 		if (objets.size() == 1) {
 			bad = objets.get(0);
 			
@@ -167,7 +169,7 @@ public class EntityVision extends SimEntity{
 			lineOfSight.setMaterial(new PhongMaterial(Color.AQUA));
 
 			//le robot gentil ne peut pas voire le mauvais robot à plus de 15m 
-			if(lineOfSight.getHeight()<15){
+			if(lineOfSight.getHeight() < 12){
 				
 				isVisible = BorderAndPathGenerator.intervisibilityBetween(bad.getPosition(), Util.rectifi(positionR()),bounds);
 				
@@ -296,6 +298,12 @@ public class EntityVision extends SimEntity{
 		
 		
 		return dicPledge;
+	}
+	
+	public void extend_graph(){
+		
+		List<Point3D> accessibleZone = AcessibleZone();
+		escapeGraph.addMultipleLane(Util.rectifi(positionR()), accessibleZone);
 	}
 	
 	

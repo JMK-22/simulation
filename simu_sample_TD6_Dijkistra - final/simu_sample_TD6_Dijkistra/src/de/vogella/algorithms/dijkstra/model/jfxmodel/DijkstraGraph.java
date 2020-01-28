@@ -52,24 +52,27 @@ public class DijkstraGraph {
 
   }
   
-  public void addMultipleLane(Point3DVertex source,List<Point3DVertex> t){
+  public void addMultipleLane(Point3D source,List<Point3D> t){
 	  
-	  for (Point3DVertex a : t){
-		  addLane(source,a);
+	  Point3DVertex s = new Point3DVertex(source);
+	  for (Point3D a : t){
+		  Point3DVertex a1 = new Point3DVertex(a);
+		  addLane(s,a1);
 	  }
 	  
 	  
   }
   
   
-  public  LinkedList<IVertex> shorterPath(Point3DVertex source, Point3DVertex arrival) {
+  public  LinkedList<IVertex> shorterPath(Point3D source, Point3D arrival) {
     	
-
+	  Point3DVertex s = new Point3DVertex(source);
+	  Point3DVertex a = new Point3DVertex(arrival);
     // Lets check from location Loc_1 to Loc_10
     Graph graph = new Graph(nodes, edges);
     DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
-    dijkstra.execute(source);
-    LinkedList<IVertex> path =  dijkstra.getPath(arrival);
+    dijkstra.execute(s);
+    LinkedList<IVertex> path =  dijkstra.getPath(a);
         
     for (IVertex vertex : path) {
       System.out.println(vertex);
@@ -77,8 +80,6 @@ public class DijkstraGraph {
     
     return path;
     
-  }
-
-  
+  } 
 }
 

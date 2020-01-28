@@ -19,7 +19,8 @@ public class EntityVisionGood extends EntityVision  {
 	
 	EntityVisionFeature VFeat;
 	EntityVisionInit ini;
-
+	int compteur=0;
+	
 	public EntityVisionGood(String name, SimFeatures features) {
 		super(name, features);
 	}
@@ -33,18 +34,33 @@ public class EntityVisionGood extends EntityVision  {
 
 		@Override
 		public void Process() {
-			Robot r = (Robot) getParent();
+			System.out.println( "NIQUEEEEE " + canSeeBadRobot());
 			
-			Logger.Detail(this, "AfterActivate", "Activation EntityVision", "test");
-			
-			HashMap<String, Point3D> d = dic_pledge();
-			
-			Point3D target = pleadDecision(d);
-			
-			r.setTarget(target);
-			
-			Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));
+			if (!canSeeBadRobot()){
+				Robot r = (Robot) getParent();
+				
+				if (compteur==10){
+					compteur = 0;
+					extend_graph();
+				}
+				
+				compteur+=1;
+				
+				
+				HashMap<String, Point3D> d = dic_pledge();
+				
+				Point3D target = pleadDecision(d);
+				
+				r.setTarget(target);
+				
+				Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));
+			}
+			else{
+				escapeGraph.shorterPath(positionR(),((Robot) getParent()).getrIni().getPosInit());
+			}
 		}
+			
+			
 	}
 	
 	protected Point3D positionR(){
