@@ -33,65 +33,7 @@ public class EntityVisionGood extends EntityVision  {
 	}
 	
 	
-	public List<Point3D> VisibleZone(){
-		
-		List<Point3D> zone =Util.AbsoluteZone( Util.rectifi(positionR()));
-		List<Point3D> VisibleZone =new ArrayList<Point3D>();
-		
-		
-		@SuppressWarnings("unchecked")
-		List<Wall> walls = (List<Wall>) (List<?>) getEngine()
-				.requestSimObject(simo -> (simo instanceof Wall) && ((Wall) simo).getType() == 2);
-		List<Bounds> bounds = new ArrayList<Bounds>();
-		
-		for (Wall w : walls) {
-			bounds.addAll(w.getBounds());
-		}
-		for (Point3D p:zone){
-			
-			boolean isAcessible = BorderAndPathGenerator.intervisibilityBetween(p, Util.rectifi(positionR()),
-					bounds);
-			if (isAcessible){
-				VisibleZone.add(p);
-				
-			}
-			
-		}
-		
-		
-		return VisibleZone;
-		
-	}
-
-	public List<Point3D> AcessibleZone(){
 	
-		List<Point3D> zone =Util.AbsoluteZone( Util.rectifi(positionR()));
-		List<Point3D> AcessibleZone =new ArrayList<Point3D>();
-		
-		
-		@SuppressWarnings("unchecked")
-		List<Wall> walls = (List<Wall>) (List<?>) getEngine()
-				.requestSimObject(simo -> (simo instanceof Wall) && ((Wall) simo).getType() == 2|| ((Wall) simo).getType() == 3);
-		List<Bounds> bounds = new ArrayList<Bounds>();
-		
-		for (Wall w : walls) {
-			bounds.addAll(w.getBounds());
-		}
-		for (Point3D p:zone){
-			
-			boolean isAcessible = BorderAndPathGenerator.intervisibilityBetween(p, Util.rectifi(positionR()),
-					bounds);
-			if (isAcessible){
-				AcessibleZone.add(p);
-				
-			}
-			
-		}
-		
-		
-		return AcessibleZone;
-	
-	}
 	
 	
 }

@@ -287,5 +287,21 @@ public class Util {
 	 return new Point3D(Math.round(p.getX()),Math.round(p.getY()),0.5);
 	   
    }
+ 
+ // ici l'angle est en radian
+ public static List<Point3D> Pledge_point(double direction){
+	 
+	 List<Point3D> Lpledge = new ArrayList<Point3D>();
+	 
+	 Point3D a1 = new Point3D(Math.sin(direction),Math.cos(direction),0);
+	 Point3D a2 = new Point3D(Math.sin(direction + (Math.PI /2)),Math.cos(direction + (Math.PI /2)),0);
+	 Point3D a3 =  new Point3D(Math.sin(direction+ Math.PI),Math.cos(direction+ Math.PI),0);
+	 
+	 
+	 return Lpledge;
+	 
+ }
+ 
+ 
 
 }
