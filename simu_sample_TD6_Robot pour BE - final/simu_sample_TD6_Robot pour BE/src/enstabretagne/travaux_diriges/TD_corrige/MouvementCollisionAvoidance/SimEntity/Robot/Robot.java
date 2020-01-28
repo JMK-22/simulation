@@ -42,7 +42,7 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 	private EntityMouvementSequenceur rmv;
 	private EntityVision rvd;
 
-	Point3D dir;// direction du mouvement
+	private Point3D dir;// direction du mouvement
 	Point3D target;
 	double speed;
 	Rotate r;
@@ -54,6 +54,14 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 	@Override
 	public Point3D getPosition() {
 		return rmv.getPosition(getCurrentLogicalDate());
+	}
+
+	public Point3D getDirection() {
+		return dir;
+	}
+
+	public void setDir(Point3D dir) {
+		this.dir = dir;
 	}
 
 	@Override

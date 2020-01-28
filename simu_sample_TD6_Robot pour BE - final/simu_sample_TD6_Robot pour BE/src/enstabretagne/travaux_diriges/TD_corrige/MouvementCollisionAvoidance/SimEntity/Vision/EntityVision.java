@@ -1,6 +1,8 @@
 package enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Vision;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import de.vogella.algorithms.dijkstra.model.jfxmodel.DijkstraGraph;
@@ -181,6 +183,44 @@ public class EntityVision extends SimEntity{
 	// Debut Fonctions grille
 
 	// Fin Fonctions grille
+	
+	@SuppressWarnings("unchecked")
+	public HashMap<String, Point3D> dic_pledge() {
+		
+		HashMap<String, Point3D> dicPledge = new HashMap<String, Point3D>();
+		
+		List<String> list = Arrays.asList("Gauche", "Milieu", "Droite"); 
+		
+		Point3D dir = ((Robot) getParent()).getDirection();
+		double rad = Math.toRadians(dir.getZ()); 
+		
+		List<Point3D> pledge_points = Util.Pledge_point(rad);
+		
+		List<Wall> walls = (List<Wall>) (List<?>) getEngine()
+				.requestSimObject(simo -> (simo instanceof Wall) && ((Wall) simo).getType() == 2 || ((Wall) simo).getType()==3);
+		
+		List<Bounds> bounds = new ArrayList<Bounds>();
+		
+		
+		for (Wall w : walls) {
+			bounds.addAll(w.getBounds());
+		}
+		
+		
+		
+		for (int i=0; i<3;i++){
+			
+			if (BorderAndPathGenerator.intervisibilityBetween(pledge_points.get(i), Util.rectifi(positionR()),bounds)){
+				
+				dicPledge.put(list.get(i),pledge_points.get(i));
+				
+			}
+			
+		}
+		
+		
+		return dicPledge;
+	}
 	
 	
 }
