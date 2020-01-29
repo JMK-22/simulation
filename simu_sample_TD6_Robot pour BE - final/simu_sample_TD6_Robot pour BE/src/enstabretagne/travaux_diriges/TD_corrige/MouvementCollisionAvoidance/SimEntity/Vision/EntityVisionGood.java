@@ -3,6 +3,7 @@ package enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.Sim
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayDeque;
 
 import enstabretagne.base.logger.Logger;
 import enstabretagne.base.time.LogicalDuration;
@@ -20,6 +21,8 @@ public class EntityVisionGood extends EntityVision  {
 	EntityVisionFeature VFeat;
 	EntityVisionInit ini;
 	int compteur=10;
+	boolean escape = false;
+	ArrayDeque<Point3D> escapeRoute;
 	
 	public EntityVisionGood(String name, SimFeatures features) {
 		super(name, features);
@@ -35,11 +38,10 @@ public class EntityVisionGood extends EntityVision  {
 
 		@Override
 		public void Process() {
+			Robot r = (Robot) getParent();
 			
 			Logger.Information( this,"AfterActivate", "EntityVisionGood:", "Graph num of node :" + Integer.toString(escapeGraph.getNodes().size()) );
-			if (!canSeeBadRobot()){
-				Robot r = (Robot) getParent();
-				
+			if (!canSeeBadRobot() && !escape){				
 				if (compteur==10){
 					compteur = 0;
 					extend_graph();
@@ -54,13 +56,27 @@ public class EntityVisionGood extends EntityVision  {
 				Point3D target = pleadDecision(d);
 				
 				r.setTarget(target);
+				if (compteur == 0) {
+					Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1000)));
+				} else {
+					Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));
+				}
 				
-				Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));
 			}
-			else{
+			else if (canSeeBadRobot() && !escape){
+				escape = true;
 				
 				extend_graph();
-				escapeGraph.shorterPath(positionR(),((Robot) getParent()).getrIni().getPosInit());
+				escapeRoute = escapeGraph.shorterPath(positionR(),((Robot) getParent()).getrIni().getPosInit());
+				r.setTarget(escapeRoute.poll());
+				Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofSeconds(20)));	
+			} else {
+				if (escapeRoute.isEmpty()) {
+					System.out.println("Mission accomplished, the world is saved !");
+				} else {
+					r.setTarget(escapeRoute.poll());
+					Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));	
+				}
 			}
 		}
 			

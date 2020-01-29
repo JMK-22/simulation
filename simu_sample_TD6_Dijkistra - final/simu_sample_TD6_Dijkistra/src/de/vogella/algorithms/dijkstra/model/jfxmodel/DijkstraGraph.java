@@ -3,7 +3,7 @@ package de.vogella.algorithms.dijkstra.model.jfxmodel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.util.ArrayDeque;
 
 import de.vogella.algorithms.dijkstra.engine.DijkstraAlgorithm;
 import de.vogella.algorithms.dijkstra.model.Edge;
@@ -82,7 +82,7 @@ public DijkstraGraph(Point3D p) {
   }
   
   
-  public  LinkedList<IVertex> shorterPath(Point3D source, Point3D arrival) {
+  public  ArrayDeque<Point3D> shorterPath(Point3D source, Point3D arrival) {
     	
 	    Point3DVertex s = new Point3DVertex(source);
 	    Point3DVertex a = new Point3DVertex(arrival);
@@ -100,7 +100,13 @@ public DijkstraGraph(Point3D p) {
 	      System.out.println(vertex);
 	    }
 	    
-	    return path;
+	    ArrayDeque<Point3D> route = new ArrayDeque<Point3D>();
+	    
+	    for (int i = 1; i < path.size(); i++) {
+	    	route.add(((Point3DVertex) path.get(i)).getPoint());
+	    }
+	    
+	    return route;
     
   } 
 }
