@@ -1,6 +1,7 @@
 package enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Vision;
 
 import java.util.HashMap;
+import java.util.List;
 
 import enstabretagne.base.logger.Logger;
 import enstabretagne.base.time.LogicalDuration;
@@ -35,8 +36,13 @@ public class EntityVisionBad extends EntityVision {
 			if(!canSeeNemesisRobot()){
 				Logger.Information( r,"AfterActivate", "EntityVisionBad : Can't see DetectionRobot "  );
 				Post(new WaitAndShoot(), getCurrentLogicalDate().add(LogicalDuration.ofSeconds(10)));
-			}else{
-				Logger.Information( r,"AfterActivate", "EntityVisionBad : I shoot the DetectionRobot "  );
+			} else {
+				
+				@SuppressWarnings("unchecked")
+				List<Robot> robots = (List<Robot>) (List<?>) getEngine().requestSimObject(simo -> (simo instanceof Robot) && (simo != getParent()));
+
+				Logger.Information( r,"AfterActivate", "EntityVisionBad : I shoot the DetectionRobot");
+				robots.get(0).decPv(1);
 			}
 			
 		}

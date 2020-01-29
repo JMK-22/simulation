@@ -189,6 +189,10 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 	public void setPv(double pv) {
 		this.pv = pv;
 	}
+	
+	public void decPv(double damage) {
+		this.pv -= damage;
+	}
 
 	public double getCarburant() {
 		return carburant;
