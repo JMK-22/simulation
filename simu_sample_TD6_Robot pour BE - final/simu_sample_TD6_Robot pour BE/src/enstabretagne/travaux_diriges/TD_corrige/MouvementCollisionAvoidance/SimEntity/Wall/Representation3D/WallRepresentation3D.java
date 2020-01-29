@@ -40,33 +40,45 @@ public class WallRepresentation3D extends Representation3D{
 
 	@Override
 	public void init(Group world, Object obj) {
+		
 		wall3D = (IWall3D) obj;
 		monMur = new Group();
-
+		
 		PhongMaterial material;
 		material = new PhongMaterial(wall3D.getColor());
-		
-		List<Node> murs = wall3D.getMurs();
-		
-		for(Node b:murs) {
-			if(b instanceof Shape3D)
-			((Shape3D) b).setMaterial(material);
-			((Shape3D) b).setDrawMode(DrawMode.FILL);
-			
 
-			monMur.getChildren().add(b);
+		if (wall3D.getRotationXYZ() == Point3D.ZERO) {
 			
+			List<Node> murs = wall3D.getMurs();
+			
+			for(Node b:murs) {
+				if(b instanceof Shape3D)
+				((Shape3D) b).setMaterial(material);
+				((Shape3D) b).setDrawMode(DrawMode.FILL);
+				
+				monMur.getChildren().add(b);	
+			}
+		}
+		
+		else {
+			
+			List<Node> murs = wall3D.getMurs();
+			
+			for(Node b:murs) {
+				if(b instanceof Shape3D)
+				((Shape3D) b).setMaterial(material);
+				((Shape3D) b).setDrawMode(DrawMode.FILL);
+				b.setRotationAxis(Rotate.X_AXIS);
+				b.setRotate(90);
+				b.setTranslateY(50);
+				
+				if (b.toString().contains("Box"))
+					monMur.getChildren().add(b);	
+			}
 			
 		}
 		
-		
-//		monMur.setTranslateX(wall3D.getPosition().getX());
-//		monMur.setTranslateY(wall3D.getPosition().getY());
-//		monMur.setTranslateZ(wall3D.getPosition().getZ());
-		
 		world.getChildren().add(monMur);
-
-		
 	}
 
 	@Override
@@ -78,3 +90,4 @@ public class WallRepresentation3D extends Representation3D{
 	
 
 }
+
