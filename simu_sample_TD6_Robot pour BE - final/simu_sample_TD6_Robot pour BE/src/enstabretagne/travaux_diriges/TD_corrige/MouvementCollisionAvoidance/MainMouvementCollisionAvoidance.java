@@ -14,7 +14,7 @@ public class MainMouvementCollisionAvoidance {
 			um.runPlan();
 			um.exit();
 		} else
-			System.out.println("nique !!");
+			
 			FX3DMonitor2.launch(FX3DMonitor2.class, args);
 		;
 		
