@@ -110,11 +110,11 @@ public class ScenarioInstance_MursSimple implements IScenarioInstance {
 		// Cr�ation des robots
 		// Cr�ation du robot gentil
 		RobotFeatures rf = new RobotFeatures("RF", 5.0, 100.0, 1,2*Math.PI,15);
-		RobotInit ri = new RobotInit("RI", Color.AQUA, new Point3D(1, 14, 0.5), new Point3D(0, 0, 0), false, new Point3D(20, 1, 1));
+		RobotInit ri = new RobotInit("RI", Color.AQUA, new Point3D(1, 14, 0.5), new Point3D(0, 0, 0), false, new Point3D(20, 1, 1),100,600);
 
 		// Cr�ation du robot m�chant
 		RobotFeatures rfbad = new RobotFeatures("RF", 0, 0, 1, 2*Math.PI,15);
-		RobotInit rb = new RobotInit("BadGuy", Color.MEDIUMVIOLETRED, new Point3D(15, 40, 0.5), new Point3D(0, 0, 90), true, Point3D.ZERO);
+		RobotInit rb = new RobotInit("BadGuy", Color.MEDIUMVIOLETRED, new Point3D(15, 40, 0.5), new Point3D(0, 0, 90), true, Point3D.ZERO,100,0);
 		
 		//Ajout des robots � l'environnement
 		mcaf.getRobots().put(ri, rf);

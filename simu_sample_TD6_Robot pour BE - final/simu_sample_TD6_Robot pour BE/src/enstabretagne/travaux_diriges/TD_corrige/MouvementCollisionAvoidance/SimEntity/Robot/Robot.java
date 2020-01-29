@@ -43,7 +43,9 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 
 	RobotFeatures rFeat;
 	Point3D maPosition;
-	DijkstraGraph map;
+	
+    double pv;
+	double carburant;
 
 	private EntityMouvementSequenceur rmv;
 	private EntityVision rvd;
@@ -132,8 +134,8 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 		rIni = (RobotInit) getInitParameters();
 		maPosition = rIni.getPosInit();
 		orientation = rIni.getOrientation();
-		map = new DijkstraGraph(maPosition);
-
+		pv = rIni.getPv();
+		carburant = rIni.getCarburant();
 		//le robot m�chant ne bouge pas
 		if (rIni.isBad()){
 			rmv = (EntityMouvementSequenceur) createChild(EntityMouvementSequenceur.class, "Mvt", rFeat.getEmsf());
@@ -161,8 +163,6 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 			for (ISimObject o : l)
 				Logger.Information(this, "AfterActivate", "Robot trouv�=" + o.getName());
 
-			Logger.Information(this, "AfterActivate", "Can see bad Robot ? " + canSeeBadRobot());
-
 			
 		}
 		rvd.activate();
@@ -180,88 +180,32 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 	
 	
 
-	@SuppressWarnings("unchecked")
-	public boolean canSeeBadRobot() {
-		
-		//syntaxe complexe ci dessous: (List<Wall>) (List<?>) est une astuce pour caster les membres d'une liste
-		//simo -> (xxxxx) est une lambda expression. C'est une mani�re tr�s compacte d'exprimer une functionnalinterface
-		//au final on cherche uniquement des vrais murs (pas les objets de type table par exemple
-		boolean isVisible= false;
-		List<Wall> walls = (List<Wall>) (List<?>) getEngine()
-				.requestSimObject(simo -> (simo instanceof Wall) && ((Wall) simo).getType() == 2);
-		List<Bounds> bounds = new ArrayList<Bounds>();
-		for (Wall w : walls) {
-			bounds.addAll(w.getBounds());
-		}
 
-		//puis on cherche la table par son nom... c'est moche mais c'est pour l'exemple!
-		Robot table = null;
-		List<Robot> objets = (List<Robot>) (List<?>) getEngine().requestSimObject(simo -> (simo instanceof Robot) && (simo != this));
-		if (objets.size() == 1) {
-			table = objets.get(0);
-			
-			//on cr�e donc un cylindre entre les deux positions
-			//on pourra afficher le cylindre dans la vue 3D
-			lineOfSight = BorderAndPathGenerator.generateCylinderBetween(table.getPosition(), getPosition());
-			lineOfSight.setMaterial(new PhongMaterial(Color.AQUA));
-
-			//le robot gentil ne peut pas voire le mauvais robot à plus de 15m 
-			if(lineOfSight.getHeight()<15){
-				
-				isVisible = BorderAndPathGenerator.intervisibilityBetween(table.getPosition(), getPosition(),bounds);
-				
-			}
-			
-			return isVisible;
-		} else
-			return false;
-
+	
+	public double getPv() {
+		return pv;
 	}
 
-//@SuppressWarnings("unchecked")
-//	public boolean Vision() {
-//		
-//		//syntaxe complexe ci dessous: (List<Wall>) (List<?>) est une astuce pour caster les membres d'une liste
-//		//simo -> (xxxxx) est une lambda expression. C'est une mani�re tr�s compacte d'exprimer une functionnalinterface
-//		//au final on cherche uniquement des vrais murs (pas les objets de type table par exemple
-//		List<Wall> walls = (List<Wall>) (List<?>) getEngine()
-//				.requestSimObject(simo -> (simo instanceof Wall) && ((Wall) simo).getType() == 2);
-//		List<Bounds> bounds = new ArrayList<Bounds>();
-//		for (Wall w : walls) {
-//			bounds.addAll(w.getBounds());
-//		}
-//
-//	    return false;
-//
-//	}
+	public void setPv(double pv) {
+		this.pv = pv;
+	}
 
+	public double getCarburant() {
+		return carburant;
+	}
+	
+	public void  decCarburant(double loss) {
+		carburant =  carburant - loss;
+		Logger.Information(this, "AfterMouvement", "Carburant restant=" + carburant);
+	}
+
+	public void setCarburant(double carburant) {
+		this.carburant = carburant;
+	}
 
 	
-//	@SuppressWarnings("unchecked")
-//	public List<Point3D> AcessibleZone(){
-//		
-//		List<Point3D> zone =Zone();
-//		List<Point3D> AcessibleZone =new ArrayList<Point3D>();
-//		
-//		
-//		List<Wall> walls = (List<Wall>) (List<?>) getEngine()
-//				.requestSimObject(simo -> (simo instanceof Wall) && ((Wall) simo).getType() == 2);
-//		List<Bounds> bounds = new ArrayList<Bounds>();
-//		
-//		for (Wall w : walls) {
-//			bounds.addAll(w.getBounds());
-//		}
-//		
-//		for (Point3D p : zone) {
-//			boolean isAcessible = BorderAndPathGenerator.intervisibilityBetween(p, Util.rectifi(getPosition()),
-//					bounds);
-//			if (isAcessible){
-//				AcessibleZone.add(p);	
-//			}	
-//		}
-//		return AcessibleZone;
-//	}
-	
+
+
 	public class StartMouvement extends SimEvent {
 
 		@Override

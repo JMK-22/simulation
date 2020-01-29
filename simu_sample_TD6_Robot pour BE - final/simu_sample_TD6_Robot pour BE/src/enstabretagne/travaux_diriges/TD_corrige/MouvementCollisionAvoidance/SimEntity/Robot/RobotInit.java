@@ -12,6 +12,8 @@ public class RobotInit extends SimInitParameters{
 	private Color couleur;
 	private boolean isBad;
 	private double orientation;
+	private double pv;
+	private double carburant;
 	
 	private EntityMouvementSequenceurInit mvtSeqIni;
 	private EntityVisionInit VisionIni;
@@ -42,7 +44,9 @@ public class RobotInit extends SimInitParameters{
 			Point3D posInit,
 			Point3D orientationXYZInit,
 			boolean isBad,
-			Point3D target) {
+			Point3D target,
+			double pv,
+			double carburant) {
 		super();
 		this.name = name;
 		this.couleur = couleur;
@@ -61,6 +65,16 @@ public class RobotInit extends SimInitParameters{
 				mst,target);
 		this.VisionIni = new EntityVisionInit(posInit);
 		this.isBad = isBad;
+		this.pv= pv;
+		this.carburant=carburant;
+	}
+
+	public double getPv() {
+		return pv;
+	}
+
+	public double getCarburant() {
+		return carburant;
 	}
 
 	public double getOrientation() {

@@ -6,6 +6,7 @@ import enstabretagne.simulation.components.IEntity;
 import enstabretagne.simulation.components.data.SimFeatures;
 import enstabretagne.simulation.core.implementation.SimEvent;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Robot.Robot;
+import javafx.geometry.Point3D;
 
 public class EntityMouvementSequenceurExemple extends EntityMouvementSequenceur{
 
@@ -31,12 +32,21 @@ public class EntityMouvementSequenceurExemple extends EntityMouvementSequenceur{
 	public class StartMvt extends SimEvent {
 		@Override
 		public void Process() {
+			
+			
+			
+			Robot r = (Robot) getParent();
+			
 			selfRotator.init(
 				getCurrentLogicalDate(),
 				mv.getPosition(getCurrentLogicalDate()),
 				mv.getRotationXYZ(getCurrentLogicalDate()),
 				getTarget(),
 				emsf.getMaxSelfRotationSpeed());
+			
+			
+			double lossRotation = Math.abs(mv.getRotationXYZ(getCurrentLogicalDate()).getZ() - getTarget().getZ())/360;
+			r.decCarburant(lossRotation);
 			
 			mv = selfRotator;
 			
@@ -49,9 +59,18 @@ public class EntityMouvementSequenceurExemple extends EntityMouvementSequenceur{
 		@Override
 		public void Process() {
 			if (emsf.getMaxLinearSpeed() != 0) {
+				
+				
+				
+				Robot r = (Robot) getParent();
+				
 				rectilinearMover.init(getCurrentLogicalDate(), mv.getPosition(getCurrentLogicalDate()),
 						getTarget(), emsf.getMaxLinearSpeed());
 				mv = rectilinearMover;
+				
+				double lossRectilinearM = (getTarget().subtract(mv.getPosition(getCurrentLogicalDate()))).magnitude();
+				r.decCarburant(lossRectilinearM);
+				
 				Post(new RectilinearMouvementFinished(), mv.getDurationToReach());
 			}
 		}
@@ -68,8 +87,6 @@ public class EntityMouvementSequenceurExemple extends EntityMouvementSequenceur{
 			EntityMouvementSequenceurExemple e= (EntityMouvementSequenceurExemple) Owner();
 			Robot r = (Robot) e.getParent();
 			
-//			Logger.Information(r, "AfterActivate", "Can see table ? " + r.canSeeTable());
-//			Logger.Information(r, "AfterActivate", "Vision ? " + r.AcessibleZone().size());
 			
 			Post(r.new MouvementFinished(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));
 		}
