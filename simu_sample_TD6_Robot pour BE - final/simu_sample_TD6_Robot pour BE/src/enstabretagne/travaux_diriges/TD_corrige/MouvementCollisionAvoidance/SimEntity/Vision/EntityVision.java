@@ -169,7 +169,7 @@ public class EntityVision extends SimEntity{
 			lineOfSight.setMaterial(new PhongMaterial(Color.AQUA));
 
 			//le robot gentil ne peut pas voire le mauvais robot à plus de 15m 
-			if(lineOfSight.getHeight() < 12){
+			if(lineOfSight.getHeight() < 15){
 				
 				isVisible = BorderAndPathGenerator.intervisibilityBetween(bad.getPosition(), Util.rectifi(positionR()),bounds);
 				
@@ -218,9 +218,52 @@ public class EntityVision extends SimEntity{
 
 	}
 
+	Point3D pleadSuivreMur(HashMap<String, Point3D> surrondings, boolean clockwise) {
+		Robot r = (Robot) getParent();
+		
+		if (clockwise) {
+			if (surrondings.containsKey("droite")) {
+				Logger.Information(r, "FOLLOW_MUR", " droite");
+				r.addOrientation(Math.PI / 2);
+				return surrondings.get("droite");
+				
+			} else if (surrondings.containsKey("devant")) {
+				Logger.Information(r, "FOLLOW_MUR", " devant");
+				return surrondings.get("devant");
+				
+			} else if (surrondings.containsKey("gauche")) {
+				Logger.Information(r, "FOLLOW_MUR", " gauche");
+				r.addOrientation(-Math.PI / 2);
+				return surrondings.get("gauche");
+				
+			} else {
+				Logger.Information(r, "FOLLOW_MUR", "surrondings contains no point, no mvt possible");
+				return null;
+			}
+		} else {
+			if (surrondings.containsKey("gauche")) {
+				Logger.Information(r, "FOLLOW_MUR", " gauche");
+				r.addOrientation(Math.PI / 2);
+				return surrondings.get("gauche");
+				
+			} else if (surrondings.containsKey("devant")) {
+				Logger.Information(r, "FOLLOW_MUR", " devant");
+				return surrondings.get("devant");
+				
+			} else if (surrondings.containsKey("droite")) {
+				Logger.Information(r, "FOLLOW_MUR", " droite");
+				r.addOrientation(-Math.PI / 2);
+				return surrondings.get("droite");
+				
+			} else {
+				Logger.Information(r, "FOLLOW_MUR", "surrondings contains no point, no mvt possible");
+				return null;
+			}
+		}
+		
+		
+	}
 	
-	
-	// Debut Fonctions grille
 	Point3D pleadDecision(HashMap<String, Point3D> surrondings) {
 		Robot r = (Robot) getParent();
 		
@@ -287,7 +330,6 @@ public class EntityVision extends SimEntity{
 		
 		return null;
 	}
-	// Fin Fonctions grille
 	
 	@SuppressWarnings("unchecked")
 	public HashMap<String, Point3D> dic_pledge() {

@@ -86,19 +86,12 @@ public DijkstraGraph(Point3D p) {
     	
 	    Point3DVertex s = new Point3DVertex(source);
 	    Point3DVertex a = new Point3DVertex(arrival);
-	  
-	    System.out.println(nodes.contains(s));
-	    System.out.println(s.toString());
-	    System.out.println(nodes.contains(a));
-    // Lets check from location Loc_1 to Loc_10
+	  	    
+	    // Lets check from location Loc_1 to Loc_10
 	    Graph graph = new Graph(nodes, edges);
 	    DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
 	    dijkstra.execute(s);
 	    LinkedList<IVertex> path =  dijkstra.getPath(a);
-	        
-	    for (IVertex vertex : path) {
-	      System.out.println(vertex);
-	    }
 	    
 	    ArrayDeque<Point3D> route = new ArrayDeque<Point3D>();
 	    

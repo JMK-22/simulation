@@ -22,6 +22,8 @@ public class EntityVisionGood extends EntityVision  {
 	EntityVisionInit ini;
 	int compteur=10;
 	boolean escape = false;
+	boolean approach = false;
+	boolean clockwise = false;
 	ArrayDeque<Point3D> escapeRoute;
 	
 	public EntityVisionGood(String name, SimFeatures features) {
@@ -40,15 +42,8 @@ public class EntityVisionGood extends EntityVision  {
 		public void Process() {
 			Robot r = (Robot) getParent();
 			
-			if (!canSeeBadRobot() && !escape){				
-				if (compteur==10){
-					compteur = 0;
-					extend_graph();
-					System.out.println(positionR().toString());
-				}
-				
-				compteur+=1;
-				
+			if (!canSeeBadRobot() && !escape){
+				extendGraphIfNeeded();
 				
 				HashMap<String, Point3D> d = dic_pledge();
 				
@@ -62,24 +57,85 @@ public class EntityVisionGood extends EntityVision  {
 				}
 				
 			}
-			else if (canSeeBadRobot() && !escape){
-				escape = true;
-				
-				extend_graph();
-				escapeRoute = escapeGraph.shorterPath(positionR(),((Robot) getParent()).getrIni().getPosInit());
-				r.setTarget(escapeRoute.poll());
-				Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofSeconds(20)));	
-			} else {
-				if (escapeRoute.isEmpty()) {
-					System.out.println("Mission accomplished, the world is saved !");
+			else if (canSeeBadRobot() && !escape && !approach){
+				extendGraphIfNeeded();
+				initFollowWall();
+				approach = true;
+			} else if (approach) {
+				if (canSeeNemesisRobot()) {
+					extend_graph();
+					escapeRoute = escapeGraph.shorterPath(positionR(),((Robot) getParent()).getrIni().getPosInit());
+					approach = false;
+					escape();
 				} else {
-					r.setTarget(escapeRoute.poll());
-					Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));	
-				}
+					extendGraphIfNeeded();
+					followWall();					
+				}				
+			} else {
+				escape();
 			}
 		}
 			
 			
+	}
+	
+	protected void extendGraphIfNeeded() {
+		if (compteur == 10){
+			compteur = 0;
+			extend_graph();
+		}
+		
+		compteur+=1;
+	}
+	
+	
+	protected void initFollowWall() {
+		Robot r = (Robot) getParent();
+		Point3D target;
+		
+		HashMap<String, Point3D> d = dic_pledge();
+		
+		if (!d.containsKey("devant")) {
+			target = d.get("droite");
+			clockwise = false;
+		} else if (!d.containsKey("droite")) {
+			target = d.get("devant");
+			clockwise = true;
+		} else {
+			target = d.get("devant");
+			clockwise = false;
+		}
+		
+		r.setTarget(target);
+		Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(20)));
+	}
+	
+	protected void followWall() {
+		Robot r = (Robot) getParent();
+		
+		HashMap<String, Point3D> d = dic_pledge();
+		
+		Point3D target = pleadSuivreMur(d, clockwise);
+		
+		r.setTarget(target);
+		Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(2)));
+	}
+	
+	protected void escape() {
+		Robot r = (Robot) getParent();
+		long delay = 10;
+		
+		if (!escape) {
+			delay = 30000;
+			escape = true;
+		}
+		
+		if (escapeRoute.isEmpty()) {
+			System.out.println("Mission accomplished, the world is saved !");
+		} else {
+			r.setTarget(escapeRoute.poll());
+			Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(delay)));	
+		}
 	}
 	
 	protected Point3D positionR(){
@@ -87,9 +143,5 @@ public class EntityVisionGood extends EntityVision  {
 		
 		return r.getPosition();
 	}
-	
-	
-	
-	
 	
 }
