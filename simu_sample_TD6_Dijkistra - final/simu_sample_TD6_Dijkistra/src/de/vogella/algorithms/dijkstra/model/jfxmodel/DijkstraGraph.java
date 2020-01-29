@@ -31,7 +31,11 @@ public class DijkstraGraph {
 	  return graph;
   }
   
-  public DijkstraGraph(Point3D p) {
+  public List<IVertex> getNodes() {
+	return nodes;
+}
+
+public DijkstraGraph(Point3D p) {
 	  nodes = new ArrayList<IVertex>();
 	  edges = new ArrayList<IEdge>();
 	  nodes.add(new Point3DVertex(p));
@@ -41,8 +45,13 @@ public class DijkstraGraph {
 	}
   
   private void addLane(Point3DVertex s,Point3DVertex t) {
-	  	if(!nodes.contains(s)) nodes.add(s);
-	  	if(!nodes.contains(t)) nodes.add(t);
+	  	
+	  	if(!nodes.contains(s)){
+	  		nodes.add(s);
+	  	}
+	  	if(!nodes.contains(t)){
+	  		nodes.add(t);
+	  	}
 
 	  	Point3DEdge e1 = new Point3DEdge(s,t); 
 	  	Point3DEdge e2 = new Point3DEdge(t,s); 
@@ -55,6 +64,15 @@ public class DijkstraGraph {
   public void addMultipleLane(Point3D source,List<Point3D> t){
 	  
 	  Point3DVertex s = new Point3DVertex(source);
+	  
+	  if(!nodes.contains(s)){
+		    System.out.println("source not Contain :" + s.toString());
+	  		nodes.add(s);
+	  	}else{
+	  		System.out.println("source  Contain :" + s.toString());
+	  	}
+	  
+	 
 	  for (Point3D a : t){
 		  Point3DVertex a1 = new Point3DVertex(a);
 		  addLane(s,a1);
@@ -66,19 +84,23 @@ public class DijkstraGraph {
   
   public  LinkedList<IVertex> shorterPath(Point3D source, Point3D arrival) {
     	
-	  Point3DVertex s = new Point3DVertex(source);
-	  Point3DVertex a = new Point3DVertex(arrival);
+	    Point3DVertex s = new Point3DVertex(source);
+	    Point3DVertex a = new Point3DVertex(arrival);
+	  
+	    System.out.println(nodes.contains(s));
+	    System.out.println(s.toString());
+	    System.out.println(nodes.contains(a));
     // Lets check from location Loc_1 to Loc_10
-    Graph graph = new Graph(nodes, edges);
-    DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
-    dijkstra.execute(s);
-    LinkedList<IVertex> path =  dijkstra.getPath(a);
-        
-    for (IVertex vertex : path) {
-      System.out.println(vertex);
-    }
-    
-    return path;
+	    Graph graph = new Graph(nodes, edges);
+	    DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
+	    dijkstra.execute(s);
+	    LinkedList<IVertex> path =  dijkstra.getPath(a);
+	        
+	    for (IVertex vertex : path) {
+	      System.out.println(vertex);
+	    }
+	    
+	    return path;
     
   } 
 }

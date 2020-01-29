@@ -287,8 +287,8 @@ public class EntityVision extends SimEntity{
 			
 			if (BorderAndPathGenerator.intervisibilityBetween(p, Util.rectifi(positionR()),bounds)){
 				
-				System.out.println(list.get(i));
-				System.out.println(p.toString());
+				//System.out.println(list.get(i));
+				//System.out.println(p.toString());
 				
 				dicPledge.put(list.get(i),p);
 				
@@ -301,9 +301,10 @@ public class EntityVision extends SimEntity{
 	}
 	
 	public void extend_graph(){
-		
+		Robot r = (Robot) getParent();
 		List<Point3D> accessibleZone = AcessibleZone();
-		escapeGraph.addMultipleLane(Util.rectifi(positionR()), accessibleZone);
+		System.out.println( "Acessible zone size !!! "+Integer.toString(accessibleZone.size()));
+		escapeGraph.addMultipleLane(positionR(), accessibleZone);
 	}
 	
 	

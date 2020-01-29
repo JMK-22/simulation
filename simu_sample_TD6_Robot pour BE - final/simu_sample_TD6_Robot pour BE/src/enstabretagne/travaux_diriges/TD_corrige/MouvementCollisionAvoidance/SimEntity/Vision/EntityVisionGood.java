@@ -19,7 +19,7 @@ public class EntityVisionGood extends EntityVision  {
 	
 	EntityVisionFeature VFeat;
 	EntityVisionInit ini;
-	int compteur=0;
+	int compteur=10;
 	
 	public EntityVisionGood(String name, SimFeatures features) {
 		super(name, features);
@@ -30,18 +30,20 @@ public class EntityVisionGood extends EntityVision  {
 		Post(new MouvementStrategie(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));
 	}
 	
+	
 	public class MouvementStrategie extends SimEvent {
 
 		@Override
 		public void Process() {
-			System.out.println( "NIQUEEEEE " + canSeeBadRobot());
 			
+			Logger.Information( this,"AfterActivate", "EntityVisionGood:", "Graph num of node :" + Integer.toString(escapeGraph.getNodes().size()) );
 			if (!canSeeBadRobot()){
 				Robot r = (Robot) getParent();
 				
 				if (compteur==10){
 					compteur = 0;
 					extend_graph();
+					System.out.println(positionR().toString());
 				}
 				
 				compteur+=1;
@@ -56,6 +58,8 @@ public class EntityVisionGood extends EntityVision  {
 				Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));
 			}
 			else{
+				
+				extend_graph();
 				escapeGraph.shorterPath(positionR(),((Robot) getParent()).getrIni().getPosInit());
 			}
 		}
