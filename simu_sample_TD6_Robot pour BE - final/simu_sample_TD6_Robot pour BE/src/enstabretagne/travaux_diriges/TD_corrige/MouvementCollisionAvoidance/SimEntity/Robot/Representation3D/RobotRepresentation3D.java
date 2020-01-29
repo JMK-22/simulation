@@ -56,8 +56,8 @@ public class RobotRepresentation3D extends Representation3D{
 		antenne1.setRotationAxis(Rotate.X_AXIS);
 		antenne1.setRotate(90);
 		antenne1.setTranslateZ(robot3D.getSize()*7/6);
-		antenne1.setTranslateX(robot3D.getSize()/4);
-		antenne1.setTranslateY(robot3D.getSize()*2/5);
+		antenne1.setTranslateY(robot3D.getSize()/4);
+		antenne1.setTranslateX(robot3D.getSize()*2/5);
 		monRobot.getChildren().add(antenne1);
 		
 		Cylinder antenne2 = new Cylinder(robot3D.getSize()/7, robot3D.getSize()/3);
@@ -65,36 +65,36 @@ public class RobotRepresentation3D extends Representation3D{
 		antenne2.setRotationAxis(Rotate.X_AXIS);
 		antenne2.setRotate(90);
 		antenne2.setTranslateZ(robot3D.getSize()*7/6);
-		antenne2.setTranslateX(-robot3D.getSize()/4);
-		antenne2.setTranslateY(robot3D.getSize()*2/5);
+		antenne2.setTranslateY(-robot3D.getSize()/4);
+		antenne2.setTranslateX(robot3D.getSize()*2/5);
 		monRobot.getChildren().add(antenne2);
 		
 		Cylinder bras1 = new Cylinder(robot3D.getSize()/5, robot3D.getSize()/3);
 		bras1.setMaterial(new PhongMaterial(Color.BLUE));
-		bras1.setRotationAxis(Rotate.Z_AXIS);
-		bras1.setRotate(90);
+		//bras1.setRotationAxis(Rotate.Z_AXIS);
+		//bras1.setRotate(90);
 		bras1.setTranslateZ(robot3D.getSize()/2);
-		bras1.setTranslateX(robot3D.getSize()*2/3);
+		bras1.setTranslateY(robot3D.getSize()*2/3);
 		monRobot.getChildren().add(bras1);
 		
 		Cylinder bras2 = new Cylinder(robot3D.getSize()/5, robot3D.getSize()/3);
 		bras2.setMaterial(new PhongMaterial(Color.GREEN));
-		bras2.setRotationAxis(Rotate.Z_AXIS);
-		bras2.setRotate(90);
+		//bras2.setRotationAxis(Rotate.Z_AXIS);
+		//bras2.setRotate(90);
 		bras2.setTranslateZ(robot3D.getSize()/2);
-		bras2.setTranslateX(-robot3D.getSize()*2/3);
+		bras2.setTranslateY(-robot3D.getSize()*2/3);
 		monRobot.getChildren().add(bras2);
 		
 		Sphere sy1 = new Sphere(robot3D.getSize()/9);
-		sy1.setTranslateY(robot3D.getSize()/2);
-		sy1.setTranslateX(robot3D.getSize()/4);
+		sy1.setTranslateX(robot3D.getSize()/2);
+		sy1.setTranslateY(robot3D.getSize()/4);
 		sy1.setTranslateZ(robot3D.getSize()*2/3);
 		sy1.setMaterial(new PhongMaterial(Color.RED));
 		monRobot.getChildren().add(sy1);
 		
 		Sphere sy2 = new Sphere(robot3D.getSize()/6);
-		sy2.setTranslateY(robot3D.getSize()/2);
-		sy2.setTranslateX(-robot3D.getSize()/4);
+		sy2.setTranslateX(robot3D.getSize()/2);
+		sy2.setTranslateY(-robot3D.getSize()/4);
 		sy2.setTranslateZ(robot3D.getSize()*2/3);
 		sy2.setMaterial(new PhongMaterial(Color.RED));
 		monRobot.getChildren().add(sy2);
@@ -126,3 +126,4 @@ public class RobotRepresentation3D extends Representation3D{
 	
 	
 }
+
