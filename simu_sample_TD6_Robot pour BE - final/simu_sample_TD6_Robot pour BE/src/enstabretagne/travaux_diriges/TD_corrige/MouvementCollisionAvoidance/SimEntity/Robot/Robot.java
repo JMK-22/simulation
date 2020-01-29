@@ -21,6 +21,7 @@ import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimE
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.MouvementSequenceur.EntityMouvementSequenceurExemple;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Robot.Representation3D.IRobot3D;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Vision.EntityVision;
+import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Vision.EntityVisionBad;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Vision.EntityVisionGood;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Vision.Util;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Wall.Wall;
@@ -136,7 +137,7 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 		//le robot m�chant ne bouge pas
 		if (rIni.isBad()){
 			rmv = (EntityMouvementSequenceur) createChild(EntityMouvementSequenceur.class, "Mvt", rFeat.getEmsf());
-			rvd = (EntityVision) createChild(EntityVision.class,"Vid",rFeat.getEvf());
+			rvd = (EntityVision) createChild(EntityVisionBad.class,"Vid",rFeat.getEvf());
 		}
 		//les robots gentils peuvent se d�placer en utilisant le SequenceurExemple
 		else {
@@ -162,8 +163,9 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 
 			Logger.Information(this, "AfterActivate", "Can see bad Robot ? " + canSeeBadRobot());
 
-			rvd.activate();
+			
 		}
+		rvd.activate();
 		rmv.activate();
 	}
 

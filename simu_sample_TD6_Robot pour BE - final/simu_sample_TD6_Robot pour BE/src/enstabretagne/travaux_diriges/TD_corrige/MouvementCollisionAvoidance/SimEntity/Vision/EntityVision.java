@@ -180,6 +180,43 @@ public class EntityVision extends SimEntity{
 			return false;
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean canSeeNemesisRobot() {
+		
+		// Robot can see the bad guy throught wall of type 3
+		boolean isVisible= false;
+		List<Wall> walls = (List<Wall>) (List<?>) getEngine()
+				.requestSimObject(simo -> (simo instanceof Wall) && (((Wall) simo).getType() == 2||((Wall) simo).getType() == 3));
+		List<Bounds> bounds = new ArrayList<Bounds>();
+		for (Wall w : walls) {
+			bounds.addAll(w.getBounds());
+		}
+
+		
+		Robot bad = null;
+		List<Robot> objets = (List<Robot>) (List<?>) getEngine().requestSimObject(simo -> (simo instanceof Robot) && (simo != getParent()));
+
+		if (objets.size() == 1) {
+			bad = objets.get(0);
+			
+			//on cr�e donc un cylindre entre les deux positions
+			//on pourra afficher le cylindre dans la vue 3D
+			Cylinder lineOfSight = BorderAndPathGenerator.generateCylinderBetween(bad.getPosition(), Util.rectifi(positionR()));
+			lineOfSight.setMaterial(new PhongMaterial(Color.AQUA));
+
+			//le robot gentil ne peut pas voire le mauvais robot à plus de 15m 
+			if(lineOfSight.getHeight() < 10){
+				
+				isVisible = BorderAndPathGenerator.intervisibilityBetween(bad.getPosition(), Util.rectifi(positionR()),bounds);
+				
+			}
+			
+			return isVisible;
+		} else
+			return false;
+
+	}
 
 	
 	

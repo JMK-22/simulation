@@ -40,7 +40,6 @@ public class EntityVisionGood extends EntityVision  {
 		public void Process() {
 			Robot r = (Robot) getParent();
 			
-			Logger.Information( this,"AfterActivate", "EntityVisionGood:", "Graph num of node :" + Integer.toString(escapeGraph.getNodes().size()) );
 			if (!canSeeBadRobot() && !escape){				
 				if (compteur==10){
 					compteur = 0;
