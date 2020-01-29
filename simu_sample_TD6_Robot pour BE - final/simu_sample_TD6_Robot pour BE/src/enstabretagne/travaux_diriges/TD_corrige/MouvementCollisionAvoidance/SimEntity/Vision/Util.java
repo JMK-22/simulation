@@ -282,30 +282,45 @@ public class Util {
  		return az;
  	}
  
- public static Point3D rectifi(Point3D p ){
-	 
-	 return new Point3D(Math.round(p.getX()),Math.round(p.getY()),0.5);
-	   
-   }
+	 public static Point3D rectifi(Point3D p ){
+		 
+		 return new Point3D(Math.round(p.getX()),Math.round(p.getY()),0.5);
+		   
+	   }
  
  // ici l'angle est en radian
- public static List<Point3D> Pledge_point(double direction){
-	 
-	 List<Point3D> Lpledge = new ArrayList<Point3D>();
-	 
-	 Point3D a1 = rectifi(new Point3D(Math.sin(direction),Math.cos(direction),0));
-	 Point3D a2 = rectifi(new Point3D(Math.sin(direction + (Math.PI /2)),Math.cos(direction + (Math.PI /2)),0));
-	 Point3D a3 = rectifi(new Point3D(Math.sin(direction+ Math.PI),Math.cos(direction+ Math.PI),0));
-	 
-	 Lpledge.add(a3);
-	 Lpledge.add(a2);
-	 Lpledge.add(a1);
-	 
-	 System.out.println(Lpledge.toString());
-	 
-	 return Lpledge;
-	 
- }
+	 public static List<Point3D> Pledge_point(double direction){
+		 
+		 List<Point3D> Lpledge = new ArrayList<Point3D>();
+		 
+		 Point3D a1 = rectifi(new Point3D(Math.sin(direction),Math.cos(direction),0));
+		 Point3D a2 = rectifi(new Point3D(Math.sin(direction + (Math.PI /2)),Math.cos(direction + (Math.PI /2)),0));
+		 Point3D a3 = rectifi(new Point3D(Math.sin(direction+ Math.PI),Math.cos(direction+ Math.PI),0));
+		 
+		 Lpledge.add(a3);
+		 Lpledge.add(a2);
+		 Lpledge.add(a1);
+		 
+		 System.out.println(Lpledge.toString());
+		 
+		 return Lpledge;
+		 
+	 }
+ 
+	 public static Point3D Minimise_distance(Point3D source , List<Point3D> list ){
+		 
+		 double dist = Double.MAX_VALUE;
+		 Point3D min= null;
+		 
+		 for (Point3D p : list){
+			 if(dist>p.subtract(source).magnitude()){
+				 min = p;
+			 }
+		 
+		 }
+		 return min;
+		 
+	 }
  
  
 

@@ -386,5 +386,13 @@ public class EntityVision extends SimEntity{
 		escapeGraph.addMultipleLane(positionR(), accessibleZone);
 	}
 	
+	public Point3D approachBadRobot(){
+		
+		List<Robot> objets = (List<Robot>) (List<?>) getEngine().requestSimObject(simo -> (simo instanceof Robot) && (simo != getParent()));
+		Robot bad = objets.get(0);
+		
+		return Util.Minimise_distance(bad.getPosition(),AcessibleZone());
+	}
+	
 	
 }
