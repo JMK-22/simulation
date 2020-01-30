@@ -17,7 +17,7 @@ import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.scen
 import javafx.geometry.Point3D;
 import javafx.scene.paint.Color;
 
-public class ScenarioInstance_MursSimple implements IScenarioInstance {
+public class ScenarioInstance_GroundWalker implements IScenarioInstance {
 
 	@Override
 	public IScenario getScenarioInstance(long seed) {
