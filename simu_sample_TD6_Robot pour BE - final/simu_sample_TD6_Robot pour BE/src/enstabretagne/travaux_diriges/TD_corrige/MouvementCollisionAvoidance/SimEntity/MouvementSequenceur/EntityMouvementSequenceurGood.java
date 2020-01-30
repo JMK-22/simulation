@@ -8,12 +8,12 @@ import enstabretagne.simulation.core.implementation.SimEvent;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Robot.Robot;
 import javafx.geometry.Point3D;
 
-public class EntityMouvementSequenceurExemple extends EntityMouvementSequenceur{
+public class EntityMouvementSequenceurGood extends EntityMouvementSequenceur{
 
 	EntityMouvementSequenceurFeature emsf;
 	EntityMouvementSequenceurInit emsi;
 	
-	public EntityMouvementSequenceurExemple(String name, SimFeatures features) {
+	public EntityMouvementSequenceurGood(String name, SimFeatures features) {
 		super(name, features);
 	}
 	
@@ -84,7 +84,7 @@ public class EntityMouvementSequenceurExemple extends EntityMouvementSequenceur{
 			staticMover.init(mv.getPosition(getCurrentLogicalDate()), mv.getRotationXYZ(getCurrentLogicalDate()));
 			mv = staticMover;
 			
-			EntityMouvementSequenceurExemple e= (EntityMouvementSequenceurExemple) Owner();
+			EntityMouvementSequenceurGood e= (EntityMouvementSequenceurGood) Owner();
 			Robot r = (Robot) e.getParent();
 			
 			

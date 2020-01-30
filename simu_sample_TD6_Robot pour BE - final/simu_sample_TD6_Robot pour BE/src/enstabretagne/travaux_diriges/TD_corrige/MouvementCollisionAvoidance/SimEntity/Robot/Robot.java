@@ -18,7 +18,7 @@ import enstabretagne.simulation.core.implementation.SimEvent;
 //import enstabretagne.simulation.core.implementation.SimEvent;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.Expertise.BorderAndPathGenerator;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.MouvementSequenceur.EntityMouvementSequenceur;
-import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.MouvementSequenceur.EntityMouvementSequenceurExemple;
+import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.MouvementSequenceur.EntityMouvementSequenceurGood;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Robot.Representation3D.IRobot3D;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Vision.EntityVision;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Vision.EntityVisionBad;
@@ -143,7 +143,7 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 		}
 		//les robots gentils peuvent se d�placer en utilisant le SequenceurExemple
 		else {
-			rmv = (EntityMouvementSequenceur) createChild(EntityMouvementSequenceurExemple.class, "Mvt",
+			rmv = (EntityMouvementSequenceur) createChild(EntityMouvementSequenceurGood.class, "Mvt",
 					rFeat.getEmsf());
 			rvd = (EntityVision) createChild(EntityVisionGood.class,"Vid",rFeat.getEvf());
 								
@@ -214,7 +214,7 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 
 		@Override
 		public void Process() {
-			Post(((EntityMouvementSequenceurExemple) rmv).new StartMvt(), getCurrentLogicalDate());	
+			Post(((EntityMouvementSequenceurGood) rmv).new StartMvt(), getCurrentLogicalDate());	
 		}
 	}
 	
