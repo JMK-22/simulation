@@ -220,8 +220,6 @@ public class EntityVision extends SimEntity{
 
 	Point3D pledgeSuivreMur(HashMap<String, Point3D> surrondings, boolean clockwise) {
 		Robot r = (Robot) getParent();
-		System.out.println("GGGGGGGGGGGGGGGG " + clockwise);
-		System.out.println("sss " + surrondings.toString());
 		
 		if (clockwise) {
 			if (surrondings.containsKey("gauche")) {
@@ -339,11 +337,7 @@ public class EntityVision extends SimEntity{
 		HashMap<String, Point3D> dicPledge = new HashMap<String, Point3D>();
 		
 		List<String> list = Arrays.asList("gauche", "devant", "droite"); 
-		
-//		Point3D dir = ((Robot) getParent()).getDirection();
-		
-//		double rad = Math.toRadians(dir.getZ());
-		
+				
 		double rad = ((Robot) getParent()).getOrientation();
 		
 		List<Point3D> pledge_points = Util.Pledge_point(rad);
@@ -358,21 +352,12 @@ public class EntityVision extends SimEntity{
 			bounds.addAll(w.getBounds());
 		}
 		
-		
-		
 		for (int i=0; i<3;i++){
 			
 			Point3D p = pledge_points.get(i).add(Util.rectifi(positionR()));
 			
-			
-			
-			if (BorderAndPathGenerator.intervisibilityBetween(p, Util.rectifi(positionR()),bounds)){
-				
-				//System.out.println(list.get(i));
-				//System.out.println(p.toString());
-				
+			if (BorderAndPathGenerator.intervisibilityBetween(p, Util.rectifi(positionR()),bounds)){				
 				dicPledge.put(list.get(i),p);
-				
 			}
 			
 		}
@@ -384,7 +369,6 @@ public class EntityVision extends SimEntity{
 	public void extend_graph(){
 		Robot r = (Robot) getParent();
 		List<Point3D> accessibleZone = AcessibleZone();
-		System.out.println( "Acessible zone size !!! "+Integer.toString(accessibleZone.size()));
 		escapeGraph.addMultipleLane(positionR(), accessibleZone);
 	}
 	

@@ -61,8 +61,6 @@ public class EntityVisionGood extends EntityVision  {
 				extendGraphIfNeeded();
 				approach = true;
 				Point3D target = approachBadRobot();
-				System.out.println("\n\n\n\n\n\n\n\n\n\n");
-				System.out.println(target);
 				r.setTarget(target);
 				Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));
 			} else if (!canSeeNemesisRobot() && !initFollowWall) {
@@ -72,7 +70,6 @@ public class EntityVisionGood extends EntityVision  {
 			} else if (!escape && !canSeeNemesisRobot()) {
 				extendGraphIfNeeded();
 				followWall();
-				System.out.println("\n\n\n\n");
 			} else if (!escape) {
 				extend_graph();
 				escapeRoute = escapeGraph.shorterPath(positionR(),((Robot) getParent()).getrIni().getPosInit());
@@ -101,7 +98,6 @@ public class EntityVisionGood extends EntityVision  {
 		Point3D target;
 		
 		HashMap<String, Point3D> d = dic_pledge();
-//		System.out.println("KEYSS : " + d.keySet().toString());
 		
 		if (!d.containsKey("devant")) {
 			if (!d.containsKey("droite")) {

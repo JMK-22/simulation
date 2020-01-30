@@ -300,11 +300,8 @@ public class Util {
 		 Lpledge.add(a3);
 		 Lpledge.add(a2);
 		 Lpledge.add(a1);
-		 
-		 System.out.println(Lpledge.toString());
-		 
-		 return Lpledge;
-		 
+		 		 
+		 return Lpledge;		 
 	 }
  
 	 public static Point3D Minimise_distance(Point3D source , List<Point3D> list ){
