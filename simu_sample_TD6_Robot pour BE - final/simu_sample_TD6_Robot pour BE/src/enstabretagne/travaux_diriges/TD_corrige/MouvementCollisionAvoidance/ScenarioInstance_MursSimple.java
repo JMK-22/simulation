@@ -73,7 +73,7 @@ public class ScenarioInstance_MursSimple implements IScenarioInstance {
 		wi_obj2 = new WallInit("Chaise", new Point3D(9, 15, 0), Point3D.ZERO, lT);
 		wi_obj3 = new WallInit("Chaise2", new Point3D(25, 12, 0), Point3D.ZERO, lT);
 		
-		/*//Ajout du sol (grand mur qu'on renverse)
+		//Ajout du sol (grand mur qu'on renverse)
 		WallFeatures wf_sol_pair = new WallFeatures("RF", Color.GRAY.brighter(), 2, 0.01, 1);
 		WallFeatures wf_sol_impair = new WallFeatures("RF", Color.BEIGE.brighter(), 2, 0.01, 1);
 		for (int i=0; i<30; i++) {
@@ -95,7 +95,7 @@ public class ScenarioInstance_MursSimple implements IScenarioInstance {
 					else
 						mcaf.getWalls().put(wi_sol, wf_sol_impair);
 			}
-		}*/
+		}
 		
 		
 		//Ajout des �l�ments
