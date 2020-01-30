@@ -220,30 +220,13 @@ public class EntityVision extends SimEntity{
 
 	Point3D pleadSuivreMur(HashMap<String, Point3D> surrondings, boolean clockwise) {
 		Robot r = (Robot) getParent();
+		System.out.println("GGGGGGGGGGGGGGGG " + clockwise);
+		System.out.println("sss " + surrondings.toString());
 		
 		if (clockwise) {
-			if (surrondings.containsKey("droite")) {
-				Logger.Information(r, "FOLLOW_MUR", " droite");
-				r.addOrientation(Math.PI / 2);
-				return surrondings.get("droite");
-				
-			} else if (surrondings.containsKey("devant")) {
-				Logger.Information(r, "FOLLOW_MUR", " devant");
-				return surrondings.get("devant");
-				
-			} else if (surrondings.containsKey("gauche")) {
-				Logger.Information(r, "FOLLOW_MUR", " gauche");
-				r.addOrientation(-Math.PI / 2);
-				return surrondings.get("gauche");
-				
-			} else {
-				Logger.Information(r, "FOLLOW_MUR", "surrondings contains no point, no mvt possible");
-				return null;
-			}
-		} else {
 			if (surrondings.containsKey("gauche")) {
 				Logger.Information(r, "FOLLOW_MUR", " gauche");
-				r.addOrientation(Math.PI / 2);
+				r.addOrientation(-Math.PI / 2);
 				return surrondings.get("gauche");
 				
 			} else if (surrondings.containsKey("devant")) {
@@ -252,8 +235,27 @@ public class EntityVision extends SimEntity{
 				
 			} else if (surrondings.containsKey("droite")) {
 				Logger.Information(r, "FOLLOW_MUR", " droite");
+				r.addOrientation(Math.PI / 2);
+				return surrondings.get("droite");
+				
+			} else {
+				Logger.Information(r, "FOLLOW_MUR", "surrondings contains no point, no mvt possible");
+				return null;
+			}
+		} else {
+			if (surrondings.containsKey("droite")) {
+				Logger.Information(r, "FOLLOW_MUR", " droite");
 				r.addOrientation(-Math.PI / 2);
 				return surrondings.get("droite");
+				
+			} else if (surrondings.containsKey("devant")) {
+				Logger.Information(r, "FOLLOW_MUR", " devant");
+				return surrondings.get("devant");
+				
+			} else if (surrondings.containsKey("gauche")) {
+				Logger.Information(r, "FOLLOW_MUR", " gauche");
+				r.addOrientation(Math.PI / 2);
+				return surrondings.get("gauche");
 				
 			} else {
 				Logger.Information(r, "FOLLOW_MUR", "surrondings contains no point, no mvt possible");

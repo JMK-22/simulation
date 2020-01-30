@@ -315,6 +315,7 @@ public class Util {
 		 for (Point3D p : list){
 			 if(dist>p.subtract(source).magnitude()){
 				 min = p;
+				 dist = p.subtract(source).magnitude();
 			 }
 		 
 		 }

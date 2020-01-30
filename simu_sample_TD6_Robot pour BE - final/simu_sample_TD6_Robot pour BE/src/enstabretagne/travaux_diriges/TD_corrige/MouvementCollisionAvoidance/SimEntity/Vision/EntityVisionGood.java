@@ -24,6 +24,7 @@ public class EntityVisionGood extends EntityVision  {
 	boolean escape = false;
 	boolean approach = false;
 	boolean clockwise = false;
+	boolean initFollowWall = false;
 	ArrayDeque<Point3D> escapeRoute;
 	
 	public EntityVisionGood(String name, SimFeatures features) {
@@ -42,7 +43,7 @@ public class EntityVisionGood extends EntityVision  {
 		public void Process() {
 			Robot r = (Robot) getParent();
 			
-			if (!canSeeBadRobot() && !escape){
+			if (!canSeeBadRobot() && !escape && !approach){
 				extendGraphIfNeeded();
 				
 				HashMap<String, Point3D> d = dic_pledge();
@@ -56,21 +57,27 @@ public class EntityVisionGood extends EntityVision  {
 					Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));
 				}
 				
-			}
-			else if (canSeeBadRobot() && !escape && !approach){
+			} else if (canSeeBadRobot() && !canSeeNemesisRobot() && !escape && !approach){
 				extendGraphIfNeeded();
-				initFollowWall();
 				approach = true;
-			} else if (approach) {
-				if (canSeeNemesisRobot()) {
-					extend_graph();
-					escapeRoute = escapeGraph.shorterPath(positionR(),((Robot) getParent()).getrIni().getPosInit());
-					approach = false;
-					escape();
-				} else {
-					extendGraphIfNeeded();
-					followWall();					
-				}				
+				Point3D target = approachBadRobot();
+				System.out.println("\n\n\n\n\n\n\n\n\n\n");
+				System.out.println(target);
+				r.setTarget(target);
+				Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(1)));
+			} else if (!canSeeNemesisRobot() && !initFollowWall) {
+				initFollowWall = true;
+				initFollowWall();
+			
+			} else if (!escape && !canSeeNemesisRobot()) {
+				extendGraphIfNeeded();
+				followWall();
+				System.out.println("\n\n\n\n");
+			} else if (!escape) {
+				extend_graph();
+				escapeRoute = escapeGraph.shorterPath(positionR(),((Robot) getParent()).getrIni().getPosInit());
+				approach = false;
+				escape();		
 			} else {
 				escape();
 			}
@@ -94,16 +101,22 @@ public class EntityVisionGood extends EntityVision  {
 		Point3D target;
 		
 		HashMap<String, Point3D> d = dic_pledge();
+//		System.out.println("KEYSS : " + d.keySet().toString());
 		
 		if (!d.containsKey("devant")) {
-			target = d.get("droite");
-			clockwise = false;
+			if (!d.containsKey("droite")) {
+				target = d.get("gauche");
+				clockwise = false;
+			} else {
+				target = d.get("droite");
+				clockwise = true;
+			}
 		} else if (!d.containsKey("droite")) {
 			target = d.get("devant");
-			clockwise = true;
+			clockwise = false;
 		} else {
 			target = d.get("devant");
-			clockwise = false;
+			clockwise = true;
 		}
 		
 		r.setTarget(target);
