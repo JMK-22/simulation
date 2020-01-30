@@ -6,6 +6,7 @@ import java.util.List;
 
 
 import enstabretagne.base.logger.Logger;
+import enstabretagne.base.logger.ToRecord;
 import enstabretagne.base.time.LogicalDuration;
 //import enstabretagne.base.time.LogicalDuration;
 import enstabretagne.monitor.interfaces.IMovable;
@@ -35,6 +36,7 @@ import javafx.scene.transform.Rotate;
 import  java.lang.Math;
 import de.vogella.algorithms.dijkstra.model.jfxmodel.DijkstraGraph;
 
+@ToRecord(name = "robot")
 public class Robot extends SimEntity implements IMovable, IRobot3D {
 	RobotInit rIni;
 	public RobotInit getrIni() {

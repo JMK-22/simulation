@@ -6,6 +6,13 @@
         "enstabretagne.simulation.core.implementation.SimObjectDictionary"
     ],
     "loggerConfs": [
+	{
+            "parametres": {
+                "FileName": "GroundWalkerSimulation.xlsx",
+                "LoggerKind": "enstabretagne.base.logger.loggerimpl.Excel.ExcelDataLogger",
+                "DirectoryName": "log"
+            }
+        },
         {
             "parametres": {
                 "LoggerKind": "enstabretagne.base.logger.loggerimpl.stdoutput.SortieTexteLogger"
