@@ -17,11 +17,11 @@ import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.scen
 import javafx.geometry.Point3D;
 import javafx.scene.paint.Color;
 
-public class ScenarioInstance_GroundWalker implements IScenarioInstance {
+public class ScenarioInstance_GroundWalker4 implements IScenarioInstance {
 
 	@Override
 	public IScenario getScenarioInstance(long seed) {
-		ScenMvtCollisionAvoidanceFeatures mcaf = new ScenMvtCollisionAvoidanceFeatures("RbScen1");
+		ScenMvtCollisionAvoidanceFeatures mcaf = new ScenMvtCollisionAvoidanceFeatures("RbScen4");
 
 		// Construction de l'environnement
 
@@ -110,7 +110,7 @@ public class ScenarioInstance_GroundWalker implements IScenarioInstance {
 		// Cr�ation des robots
 		// Cr�ation du robot gentil
 		RobotFeatures rf = new RobotFeatures("RF", 5.0, 100.0, 1,2*Math.PI,15);
-		RobotInit ri = new RobotInit("RI", Color.AQUA, new Point3D(1, 1, 0.5), new Point3D(0, 0, 0), false, new Point3D(20, 1, 1),100,600);
+		RobotInit ri = new RobotInit("RI", Color.AQUA, new Point3D(12, 1, 0.5), new Point3D(0, 0, 0), false, new Point3D(20, 1, 1),100,600);
 
 		// Cr�ation du robot m�chant
 		RobotFeatures rfbad = new RobotFeatures("RF", 0, 0, 1, 2*Math.PI,15);
@@ -124,7 +124,7 @@ public class ScenarioInstance_GroundWalker implements IScenarioInstance {
 		LogicalDateTime start = new LogicalDateTime("05/12/2017 06:00");
 		LogicalDateTime end = start.add(LogicalDuration.ofMinutes(2));
 
-		ScenMvtCollisionAvoidance scen = new ScenMvtCollisionAvoidance(new ScenarioId("Scen1"), mcaf, start, end);
+		ScenMvtCollisionAvoidance scen = new ScenMvtCollisionAvoidance(new ScenarioId("Scen4"), mcaf, start, end);
 		return scen;
 	}
 

@@ -36,7 +36,7 @@ import javafx.scene.transform.Rotate;
 import  java.lang.Math;
 import de.vogella.algorithms.dijkstra.model.jfxmodel.DijkstraGraph;
 
-@ToRecord(name = "robot")
+
 public class Robot extends SimEntity implements IMovable, IRobot3D {
 	RobotInit rIni;
 	public RobotInit getrIni() {
@@ -163,7 +163,7 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 		if (!isBad()) {
 			List<ISimObject> l = getEngine().requestSimObject(simo -> (simo instanceof Robot) && (simo != this));
 			for (ISimObject o : l)
-				Logger.Information(this, "AfterActivate", "Robot trouv�=" + o.getName());
+				Logger.Detail(this, "AfterActivate", "Robot trouv�=" + o.getName());
 
 			
 		}
@@ -202,7 +202,7 @@ public class Robot extends SimEntity implements IMovable, IRobot3D {
 	
 	public void  decCarburant(double loss) {
 		carburant =  carburant - loss;
-		Logger.Information(this, "AfterMouvement", "Carburant restant=" + carburant);
+		Logger.Detail(this, "AfterMouvement", "Carburant restant=" + carburant);
 	}
 
 	public void setCarburant(double carburant) {

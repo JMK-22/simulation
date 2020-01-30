@@ -1,7 +1,12 @@
 {
-    "germeInitial": 5,
+    "germeInitial": 10,
     "nbRepliques": 1,
     "scenarioInstanceClassNames": [
-        "enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.ScenarioInstance_GroundWalker"
+        "enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.ScenarioInstance_GroundWalker",
+        "enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.ScenarioInstance_GroundWalker2",
+        "enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.ScenarioInstance_GroundWalker2",
+        "enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.ScenarioInstance_GroundWalker3",
+        "enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.ScenarioInstance_GroundWalker4",
+        "enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.ScenarioInstance_GroundWalker5"
     ]
 }

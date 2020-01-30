@@ -36,7 +36,6 @@ public class ScenMvtCollisionAvoidance extends SimScenario{
 		
 		ScenMvtCollisionAvoidanceFeatures feature = (ScenMvtCollisionAvoidanceFeatures) getFeatures();
 		
-		
 		//Important: ordre d'initialisation. Initialiser d'abord l'environnement 
 		//car sa complexit� peut n�cessiter des traitements pr�alables � l'initialisation
 		//Par exemple: g�n�ration d'un pathfinding

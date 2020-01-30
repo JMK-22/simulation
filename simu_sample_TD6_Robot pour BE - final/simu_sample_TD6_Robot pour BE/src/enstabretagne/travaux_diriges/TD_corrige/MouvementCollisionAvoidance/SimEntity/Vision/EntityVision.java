@@ -223,40 +223,34 @@ public class EntityVision extends SimEntity{
 		
 		if (clockwise) {
 			if (surrondings.containsKey("gauche")) {
-				Logger.Information(r, "FOLLOW_MUR", " gauche");
 				r.addOrientation(-Math.PI / 2);
 				return surrondings.get("gauche");
 				
 			} else if (surrondings.containsKey("devant")) {
-				Logger.Information(r, "FOLLOW_MUR", " devant");
 				return surrondings.get("devant");
 				
 			} else if (surrondings.containsKey("droite")) {
-				Logger.Information(r, "FOLLOW_MUR", " droite");
 				r.addOrientation(Math.PI / 2);
 				return surrondings.get("droite");
 				
 			} else {
-				Logger.Information(r, "FOLLOW_MUR", "surrondings contains no point, no mvt possible");
+				Logger.Error(r, "FOLLOW_MUR", "surrondings contains no point, no mvt possible");
 				return null;
 			}
 		} else {
 			if (surrondings.containsKey("droite")) {
-				Logger.Information(r, "FOLLOW_MUR", " droite");
 				r.addOrientation(-Math.PI / 2);
 				return surrondings.get("droite");
 				
 			} else if (surrondings.containsKey("devant")) {
-				Logger.Information(r, "FOLLOW_MUR", " devant");
 				return surrondings.get("devant");
 				
 			} else if (surrondings.containsKey("gauche")) {
-				Logger.Information(r, "FOLLOW_MUR", " gauche");
 				r.addOrientation(Math.PI / 2);
 				return surrondings.get("gauche");
 				
 			} else {
-				Logger.Information(r, "FOLLOW_MUR", "surrondings contains no point, no mvt possible");
+				Logger.Error(r, "FOLLOW_MUR", "surrondings contains no point, no mvt possible");
 				return null;
 			}
 		}
@@ -269,62 +263,53 @@ public class EntityVision extends SimEntity{
 		
 		if (pledgeCounter == 0) {
 			if (surrondings.containsKey("devant")) {
-				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "devant");
 				return surrondings.get("devant");
 				
 			} else if (surrondings.containsKey("droite")) {
 				pledgeCounter -= 1;
-				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "droite");
 				r.addOrientation(-Math.PI / 2);
 				return surrondings.get("droite");
 				
 			} else if (surrondings.containsKey("gauche")) {
 				pledgeCounter += 1;
-				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "gauche");
 				r.addOrientation(Math.PI / 2);
 				return surrondings.get("gauche");
 				
 			} else {
-				Logger.Information(r, "DECISION_MOUVEMENT", "surrondings contains no point, no mvt possible");
+				Logger.Error(r, "DECISION_MOUVEMENT", "surrondings contains no point, no mvt possible");
 			}
 		} else if (pledgeCounter > 0) {
 			if (surrondings.containsKey("droite")) {
 				pledgeCounter -= 1;
 				r.addOrientation(-Math.PI / 2);
-				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "droite");
 				return surrondings.get("droite");
 				
 			} else if (surrondings.containsKey("devant")) {
-				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "devant");
 				return surrondings.get("devant");
 				
 			} else if (surrondings.containsKey("gauche")) {
-				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "gauche");
 				pledgeCounter += 1;
 				r.addOrientation(Math.PI / 2);
 				return surrondings.get("gauche");
 			} else {
-				Logger.Information(r, "pledge", "surrondings contains no point, no mvt possible");
+				Logger.Error(r, "pledge", "surrondings contains no point, no mvt possible");
 			}
 		} else {
 			if (surrondings.containsKey("gauche")) {
 				pledgeCounter += 1;
 				r.addOrientation(Math.PI / 2);
-				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "gauche");
 				return surrondings.get("gauche");
 
 			} else if (surrondings.containsKey("devant")) {
-				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "devant");
 				return surrondings.get("devant");
 				
 			} else if (surrondings.containsKey("droite")) {
-				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "droite");
 				pledgeCounter -= 1;
 				r.addOrientation(-Math.PI / 2);
 				return surrondings.get("droite");
 				
 			} else {
-				Logger.Information(r, "pledge", "surrondings contains no point, no mvt possible");
+				Logger.Error(r, "pledge", "surrondings contains no point, no mvt possible");
 			}
 		}
 		

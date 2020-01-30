@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ArrayDeque;
 
 import enstabretagne.base.logger.Logger;
+import enstabretagne.base.time.LogicalDateTime;
 import enstabretagne.base.time.LogicalDuration;
 import enstabretagne.simulation.components.IEntity;
 import enstabretagne.simulation.components.data.SimFeatures;
@@ -13,6 +14,7 @@ import enstabretagne.simulation.core.implementation.SimEvent;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.Expertise.BorderAndPathGenerator;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Robot.Robot;
 import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.SimEntity.Wall.Wall;
+import enstabretagne.travaux_diriges.TD_corrige.MouvementCollisionAvoidance.scenarios.ScenMvtCollisionAvoidance;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point3D;
 
@@ -140,11 +142,29 @@ public class EntityVisionGood extends EntityVision  {
 		}
 		
 		if (escapeRoute.isEmpty()) {
+			logInformations();
 			System.out.println("Mission accomplished, the world is saved !");
+			
 		} else {
 			r.setTarget(escapeRoute.poll());
 			Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(delay)));	
 		}
+	}
+	
+	protected void logInformations() {
+		Robot r = (Robot) getParent();
+		ScenMvtCollisionAvoidance scen = (ScenMvtCollisionAvoidance) r.getParent();
+
+		LogicalDateTime tStart = scen.getStartDateTime();
+		LogicalDateTime tEnd = getCurrentLogicalDate();
+		LogicalDuration dt = tEnd.soustract(tStart);
+		
+		Logger.Information(this, "FinSimulation", "Carburant restant: " + r.getCarburant());
+		Logger.Information(this, "FinSimulation", "Vie restante: " + r.getPv());
+		Logger.Information(this, "FinSimulation", "Temps début mission: " + tStart.toString());
+		Logger.Information(this, "FinSimulation", "Temps fin mission: " + tEnd.toString());
+		Logger.Information(this, "FinSimulation", "Durée mission: " + dt.toString());
+		
 	}
 	
 	protected Point3D positionR(){

@@ -23,7 +23,7 @@ public class EntityMouvementSequenceurGood extends EntityMouvementSequenceur{
 		super.AfterActivate(sender, starting);
 		
 		Robot r = (Robot) getParent();
-		Logger.Information(r, "AfterActivate", "EntityMouvementSequenceurExemple, Robot pos is " + r.getPosition().toString());
+		Logger.Detail(r, "AfterActivate", "EntityMouvementSequenceurExemple, Robot pos is " + r.getPosition().toString());
 		
 		emsf = (EntityMouvementSequenceurFeature) getFeatures();
 		emsi = (EntityMouvementSequenceurInit) getInitParameters();

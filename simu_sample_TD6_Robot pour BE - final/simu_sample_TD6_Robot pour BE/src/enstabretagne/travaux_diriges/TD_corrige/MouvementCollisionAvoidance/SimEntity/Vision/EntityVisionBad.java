@@ -34,15 +34,15 @@ public class EntityVisionBad extends EntityVision {
 			
 			
 			if(!canSeeNemesisRobot()){
-				Logger.Information( r,"AfterActivate", "EntityVisionBad : Can't see DetectionRobot "  );
+				Logger.Detail( r,"AfterActivate", "EntityVisionBad : Can't see DetectionRobot "  );
 				Post(new WaitAndShoot(), getCurrentLogicalDate().add(LogicalDuration.ofSeconds(10)));
 			} else {
 				
 				@SuppressWarnings("unchecked")
 				List<Robot> robots = (List<Robot>) (List<?>) getEngine().requestSimObject(simo -> (simo instanceof Robot) && (simo != getParent()));
 
-				Logger.Information( r,"AfterActivate", "EntityVisionBad : I shoot the DetectionRobot");
-				robots.get(0).decPv(1);
+				Logger.Detail( r,"AfterActivate", "EntityVisionBad : I shoot the DetectionRobot");
+				robots.get(0).decPv(50);
 			}
 			
 		}
