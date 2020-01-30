@@ -48,7 +48,7 @@ public class EntityVisionGood extends EntityVision  {
 				
 				HashMap<String, Point3D> d = dic_pledge();
 				
-				Point3D target = pleadDecision(d);
+				Point3D target = pledgeDecision(d);
 				
 				r.setTarget(target);
 				if (compteur == 0) {
@@ -128,7 +128,7 @@ public class EntityVisionGood extends EntityVision  {
 		
 		HashMap<String, Point3D> d = dic_pledge();
 		
-		Point3D target = pleadSuivreMur(d, clockwise);
+		Point3D target = pledgeSuivreMur(d, clockwise);
 		
 		r.setTarget(target);
 		Post(r.new StartMouvement(), getCurrentLogicalDate().add(LogicalDuration.ofMillis(2)));

@@ -28,7 +28,7 @@ public class EntityVision extends SimEntity{
 	EntityVisionInit ini;
 	public DijkstraGraph  escapeGraph;
 	 
-	private int pleadCounter = 0;
+	private int pledgeCounter = 0;
 	
 	public EntityVision(String name, SimFeatures features) {
 		super(name, features);
@@ -218,7 +218,7 @@ public class EntityVision extends SimEntity{
 
 	}
 
-	Point3D pleadSuivreMur(HashMap<String, Point3D> surrondings, boolean clockwise) {
+	Point3D pledgeSuivreMur(HashMap<String, Point3D> surrondings, boolean clockwise) {
 		Robot r = (Robot) getParent();
 		System.out.println("GGGGGGGGGGGGGGGG " + clockwise);
 		System.out.println("sss " + surrondings.toString());
@@ -266,43 +266,43 @@ public class EntityVision extends SimEntity{
 		
 	}
 	
-	Point3D pleadDecision(HashMap<String, Point3D> surrondings) {
+	Point3D pledgeDecision(HashMap<String, Point3D> surrondings) {
 		Robot r = (Robot) getParent();
 		
-		if (pleadCounter == 0) {
+		if (pledgeCounter == 0) {
 			if (surrondings.containsKey("devant")) {
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "devant");
+				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "devant");
 				return surrondings.get("devant");
 				
 			} else if (surrondings.containsKey("droite")) {
-				pleadCounter -= 1;
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "droite");
+				pledgeCounter -= 1;
+				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "droite");
 				r.addOrientation(-Math.PI / 2);
 				return surrondings.get("droite");
 				
 			} else if (surrondings.containsKey("gauche")) {
-				pleadCounter += 1;
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "gauche");
+				pledgeCounter += 1;
+				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "gauche");
 				r.addOrientation(Math.PI / 2);
 				return surrondings.get("gauche");
 				
 			} else {
 				Logger.Information(r, "DECISION_MOUVEMENT", "surrondings contains no point, no mvt possible");
 			}
-		} else if (pleadCounter > 0) {
+		} else if (pledgeCounter > 0) {
 			if (surrondings.containsKey("droite")) {
-				pleadCounter -= 1;
+				pledgeCounter -= 1;
 				r.addOrientation(-Math.PI / 2);
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "droite");
+				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "droite");
 				return surrondings.get("droite");
 				
 			} else if (surrondings.containsKey("devant")) {
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "devant");
+				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "devant");
 				return surrondings.get("devant");
 				
 			} else if (surrondings.containsKey("gauche")) {
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "gauche");
-				pleadCounter += 1;
+				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "gauche");
+				pledgeCounter += 1;
 				r.addOrientation(Math.PI / 2);
 				return surrondings.get("gauche");
 			} else {
@@ -310,18 +310,18 @@ public class EntityVision extends SimEntity{
 			}
 		} else {
 			if (surrondings.containsKey("gauche")) {
-				pleadCounter += 1;
+				pledgeCounter += 1;
 				r.addOrientation(Math.PI / 2);
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "gauche");
+				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "gauche");
 				return surrondings.get("gauche");
 
 			} else if (surrondings.containsKey("devant")) {
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "devant");
+				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "devant");
 				return surrondings.get("devant");
 				
 			} else if (surrondings.containsKey("droite")) {
-				Logger.Information(r, "DECISION_MOUVEMENT", "PleadCount: " + pleadCounter + ", heading " + "droite");
-				pleadCounter -= 1;
+				Logger.Information(r, "DECISION_MOUVEMENT", "PledgeCount: " + pledgeCounter + ", heading " + "droite");
+				pledgeCounter -= 1;
 				r.addOrientation(-Math.PI / 2);
 				return surrondings.get("droite");
 				
